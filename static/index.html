@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Repo Ranker | Stable v1.5.1</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <section id="landing-page" class="hero">
+        <h1 class="hero-logo"><i class="fa-solid fa-rocket"></i> Repo Ranker</h1>
+        <p style="color:var(--dim); margin-top: -10px;">Local-first GitHub portfolio architect.</p>
+        <div class="guidelines">
+            <div class="step"><i class="fa-solid fa-user"></i><p>Fetch</p></div>
+            <div class="step"><i class="fa-solid fa-sort"></i><p>Rank</p></div>
+            <div class="step"><i class="fa-solid fa-file-code"></i><p>Export</p></div>
+        </div>
+        <button class="btn-export" style="width:auto; padding: 0 40px;" onclick="showApp()">Get Started</button>
+    </section>
+
+    <div id="app-container" class="main-stack">
+        <section class="stack-section">
+            <label class="section-label">GitHub Username</label>
+            <div class="export-container" style="flex-direction:row; max-width:500px; width:100%;">
+                <input type="text" id="username" placeholder="e.g. alwinkj" class="unified-input" autocomplete="off" style="text-align:left; padding-left:15px; flex:1;">
+                <button class="btn-export" style="width:60px;" onclick="fetchData()"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            <button style="margin-top: 15px; border:none; color:var(--accent); cursor:pointer; background:none; font-size:0.8rem;" onclick="sortRepos()">Sort by Stars</button>
+        </section>
+
+        <section class="stack-section">
+            <label class="section-label">Workspace</label>
+            <div id="empty-state" style="text-align:center; padding: 40px; border: 1px dashed var(--border); color: var(--dim); border-radius:12px; width:100%;">Fetch data to begin.</div>
+            <div id="table-wrapper" class="table-card hidden">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="text-align:center">Order</th>
+                            <th>Project</th>
+                            <th>Stack</th>
+                            <th>Description</th>
+                            <th style="text-align:center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="repo-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="stack-section">
+            <label class="section-label">Sleek Preview</label>
+            <div id="md-preview" class="preview-card"></div>
+        </section>
+
+        <section class="stack-section">
+            <label class="section-label">Finalize</label>
+            <div class="export-container">
+                <input type="text" id="file-name" placeholder="README.md" class="unified-input">
+                <button class="btn-export" onclick="downloadMarkdown()">Download Markdown</button>
+                <button style="background:none; border:none; color:var(--dim); cursor:pointer; margin-top:10px;" onclick="goHome()">Back to Home</button>
+            </div>
+        </section>
+    </div>
+
+    <div id="stack-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header" style="padding:20px; display:flex; justify-content:space-between; border-bottom:1px solid var(--border);">
+                <span style="font-weight:700">EDIT STACK</span>
+                <i class="fa-solid fa-xmark" style="cursor:pointer" onclick="closeStackModal()"></i>
+            </div>
+            <div class="modal-body" style="padding:20px;">
+                <div id="modal-stack-display" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; justify-content:center;"></div>
+                <div class="export-container" style="flex-direction:row; width:100%;">
+                    <input type="text" id="stack-input" placeholder="Add tag..." class="unified-input" onkeypress="if(event.key==='Enter') applyStack()" style="text-align:left; padding-left:15px; flex:1;">
+                    <button class="btn-export" style="width:60px;" onclick="applyStack()"><i class="fa-solid fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding:15px 20px;">
+                <button style="background:transparent; border: 1px solid var(--danger); color: var(--danger); padding: 8px 20px; border-radius: 8px; cursor: pointer;" onclick="clearStack()">RESET</button>
+                <button class="btn-export" style="width:auto; padding:0 30px;" onclick="closeStackModal()">DONE</button>
+            </div>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
